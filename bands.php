@@ -3,6 +3,13 @@
 <head>
     <?php include("DBConnection.php")?>
     <link rel="stylesheet" href="style.css">
+    <script>
+    const confirmDelete = () => {
+
+        return confirm("Are you sure you want to delete this band");
+
+    }
+    </script>
 </head>
 
     <body>
@@ -10,38 +17,36 @@
             <h1>Welcome to Free-Gigs, the Free Concert Website!</h1>
             <table>
                 <tr>
-                    <td class="navbar">
-                        <h5><em>Admin Area: </em></h5>
-                        <h5><a href="./bands.php">Manage Bands</a></h5>
-                        <h5><a href="venues.php">Manage Venues</a></h5>
-                        <h5><a href="./concerts.php">Add Concert</a></h5>
-                        <h5><a href="">Logout</a></h5>
-                    </td>
+                    <?php include("navbar.php")?>
                     <td>
                     <h3>Current Bands</h3>
                         <table>
+                        <form method="get">
                         <?php
 
-                            $pos_query = "SELECT * FROM band";
-                            $pos_results = $db->query($pos_query);
+                            $select_bands = "SELECT * FROM band";
+                            $results = $db->query($select_bands);
 
-                            for($i=0; $i < $pos_results->num_rows; $i++)
+                            for($i=0; $i < $results->num_rows; $i++)
                             {
                                 echo '<tr>';
-                                $pos_row = $pos_results->fetch_assoc();
-                                echo '<td>'.$pos_row['band_name'].'</td>';
-                                echo '<td><a href=" add edit band query here'.'"> Edit </a></td>';
-                                echo '<td><a href=" add delete band query here"> Delete </a></td>';
+                                $band_row = $results->fetch_assoc();
+                                echo '<td>'.$band_row['band_name'].'</td>';
+                                echo '<td><a href="editBand.php?band_id='.$band_row['band_id'].'"> Edit </a></td>';
+                                echo '<td><a onClick="return confirmDelete();" href="deleteBand.php?band_id='.$band_row['band_id'].'"> Delete </a></td>';
                                 echo '</tr>';
                             }
                         ?>
+                        </form>
                         </table>
 
                         <h3>Add New Band:</h3>
-                        <p>Name:
-                        <input type="text" name="addNewBand" id="">
-                        <input type="button" value="Add Band">
-                        </p>
+                        <form action="insertBand.php" method="post">
+                            <p>Name:
+                                <input type="text" name="newBandName" id="newBandName">
+                                <input type="submit" value="Add Band">
+                            </p>
+                        </form>
                     </td>
                 </tr>
             </table>
