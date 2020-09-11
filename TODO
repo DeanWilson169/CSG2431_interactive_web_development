@@ -1,0 +1,8 @@
+can add bands and venues with no name
+can add bands and venues with the same name
+can name bands and venues with an existing name when editing the name
+add a way to go back to the previous page on the edit form
+finish hooking up the new date system so that the selected date is entered into the database
+add some CSS to the style sheet to make the pages look nice
+additional validation where possible
+convert displayed date to a better format

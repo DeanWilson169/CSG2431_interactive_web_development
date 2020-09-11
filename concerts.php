@@ -6,8 +6,61 @@
     import navigationbar from "navigationBar"
     </script>
     <link rel="stylesheet" href="style.css">
+
+    <script>
+
+    const ValidateDate = () => {
+        const date = document.AddConcertForm.selectedDate.value;
+        const today = new Date();
+
+        const day = today.getDate();
+        let month = today.getMonth() + 1;
+        const year = today.getFullYear();
+
+        if (month < 10){
+            month = "0" + month;
+        }
+        todayFormatted = year + "-" + month + "-" + day;
+
+        if(date < todayFormatted){
+            alert("Please enter a date in the future");
+            return false;
+        }
+        return true;
+    }
+
+    const ValidateTime = () => {
+        const time = document.AddConcertForm.selectedTime.value;
+        const today = new Date();
+
+        let hour = today.getHours();
+        let minute = today.getMinutes();
+
+        if(hour < 10){
+            hour = "0" + hour;
+        }
+        if(minute < 10){
+            minute = "0" + minute;
+        }
+
+        const todayFormatted = hour + ":" + minute;
+
+        if(time < todayFormatted){
+            alert("Please enter a time that is in the future");
+            return false;
+        }
+        return true;
+    }
+    const ValidateForm = () => {
+        if(ValidateDate() && ValidateTime()){
+            return true
+        }
+        return false;
+    }
+    </script>
 </head>
     <body>
+    
         <div>
             <h1>Welcome to Free-Gigs, the Free Concert Website!</h1>
             <table>
@@ -25,7 +78,6 @@
                                     {
                                         echo '<tr>';
                                         $pos_row = $pos_results->fetch_assoc();
-                                        //TODO convert date to better format
                                         $dateTime = DateTime::createFromFormat('YmdHi', $pos_row['concert_date']);
 
                                         echo '<td>'.$pos_row['band_name'].'</td>';
@@ -36,7 +88,7 @@
                                 ?>
                    
                     </table>
-                    <form action="insertConcert.php" method="post">
+                    <form name="AddConcertForm" action="insertConcert.php" method="post">
                         <h3>Add Concert</h3>
                         <p>
                             Band:
@@ -71,11 +123,20 @@
                         </p>
                         <p>
                             Date:
-                            <input type="text" name="selectedDateTime" id="selectedDateTime"> 
-                            (YYYY-MM-DD HH:MM format)
+                            <?php 
+                            $today = date("Y-m-d");
+                            echo '<input type="date" name="selectedDate" id="selectedDate" min="'.$today.'" value="'.$today.'">';
+                            
+                             ?>
+                            Time:
+                            <?php 
+                            $currentTime = date("H:i");
+                            echo '<input type="time" name="selectedTime" id="selectedTime" min="'.$currentTime.'" value="'.$currentTime.'">';
+                             ?>
+
                         </p>
                         
-                        <input type="submit" value="Add Concert">
+                        <input type="submit" value="Add Concert" onclick="return ValidateForm();">
                         </form>
                     </td>
                 </tr>
