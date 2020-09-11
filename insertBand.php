@@ -1,5 +1,6 @@
 <?php 
     include("DBConnection.php");
+    include("AdminCheck.php");
 
     $newBandName = $_POST['newBandName'];
     $queryBand = "INSERT INTO band VALUES (NULL, '$newBandName')";

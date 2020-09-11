@@ -3,6 +3,7 @@
 <head>
     <?php 
         include("DBConnection.php");
+        include("AdminCheck.php");
         $venue_id = $_GET['venue_id'];
         $venue_select_query = 'SELECT venue_name FROM venue WHERE venue_id='.$venue_id;
         $venue_results = $db->query($venue_select_query);

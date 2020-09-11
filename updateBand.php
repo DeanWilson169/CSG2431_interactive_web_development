@@ -1,5 +1,6 @@
 <?php 
     include("DBConnection.php");
+    include("AdminCheck.php");
 
     $newBandName = $_POST['newBandName'];
     $band_id = $_POST['band_id'];

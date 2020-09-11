@@ -1,5 +1,6 @@
 <?php 
     include("DBConnection.php");
+    include("AdminCheck.php");
 
     $newVenueName = $_POST['newVenueName'];
     $venue_id = $_POST['venue_id'];

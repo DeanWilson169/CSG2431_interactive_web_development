@@ -3,6 +3,7 @@
 <head>
     <?php 
         include("DBConnection.php");
+        include("AdminCheck.php");
         $band_id = $_GET['band_id'];
         $band_select_query = 'SELECT band_name FROM band WHERE band_id='.$band_id;
         $band_results = $db->query($band_select_query);

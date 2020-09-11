@@ -1,7 +1,7 @@
 <html>
-
 <head>
-    <?php include("DBConnection.php")?>
+    <?php include("DBConnection.php");?>
+    <?php include("AdminCheck.php"); ?>
     <script> 
     import navigationbar from "navigationBar"
     </script>

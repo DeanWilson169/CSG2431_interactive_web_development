@@ -1,5 +1,6 @@
 <?php 
     include("DBConnection.php");
+    include("AdminCheck.php");
 
     $newVenueName = $_POST['newVenueName'];
     $queryVenue = "INSERT INTO venue VALUES (NULL, '$newVenueName')";

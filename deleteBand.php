@@ -1,5 +1,7 @@
 <?php 
     include("DBConnection.php");
+    include("AdminCheck.php");
+    
 
     $band_id = $_GET['band_id'];
     $queryBand = 'DELETE FROM band WHERE band_id='.$band_id.';';

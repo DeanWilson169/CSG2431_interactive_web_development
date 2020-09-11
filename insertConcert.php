@@ -1,5 +1,6 @@
 <?php 
     include("DBConnection.php");
+    include("AdminCheck.php");
 
     $selectedBand = $_POST['selectedBand'];
     $selectedVenue = $_POST['selectedVenue'];

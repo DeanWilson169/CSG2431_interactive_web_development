@@ -1,7 +1,11 @@
 <html>
 
 <head>
-    <?php include("DBConnection.php")?>
+    <?php 
+    include("DBConnection.php");
+    include("AdminCheck.php");
+    ?>
+
     <link rel="stylesheet" href="style.css">
     <script>
     const confirmDelete = () => {

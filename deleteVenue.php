@@ -1,5 +1,6 @@
 <?php 
     include("DBConnection.php");
+    include("AdminCheck.php");
 
     $venue_id = $_GET['venue_id'];
     $queryVenue = 'DELETE FROM venue WHERE venue_id='.$venue_id.';';
