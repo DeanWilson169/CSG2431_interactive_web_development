@@ -1,4 +1,8 @@
 <?php
+		if(session_id() == ''){
+			session_start();
+		}
+		
 		// connect to the database
 		@ $db = new mysqli('localhost', 'root', '', 'concertplannerdb');
 	

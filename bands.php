@@ -5,13 +5,10 @@
     include("DBConnection.php");
     include("AdminCheck.php");
     ?>
-
     <link rel="stylesheet" href="style.css">
     <script>
     const confirmDelete = () => {
-
         return confirm("Are you sure you want to delete this band");
-
     }
     </script>
 </head>
@@ -43,7 +40,6 @@
                         ?>
                         </form>
                         </table>
-
                         <h3>Add New Band:</h3>
                         <form action="insertBand.php" method="post">
                             <p>Name:
