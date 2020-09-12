@@ -1,4 +1,4 @@
-<?php include('DBConnection.php')?>
+<?php include('../Database/DBConnection.php')?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -39,23 +39,26 @@
 <tr style="border: 1px solid black">
 	<td style="border: 1px solid black; text-align: right;">
 		Mobile number: <input name="mobile_phone" type="text" maxlength="15" /></br>
-		Password: <input name="password" type="text" /></br>
+		Password: <input name="password" type="password" /></br>
 		<input type="submit" name="logIn" value="Login"  /></br>
 		<?php
 			// if the "mobile_phone" session variable is set and not empty, redirect to the menu page
 			if (isset($_SESSION['mobile_phone']) && $_SESSION['mobile_phone'] != '' )
 			{
-				header('Location: Bookings.php');
+				header('Location: ../Attendee/Booking/Bookings.php');
 				exit;
 			}
 			
 			if (isset($_POST['mobile_phone']) && isset($_POST['password']))
 			{
-				$mobileNum = $_POST['mobile_phone'];
+				$mobile_phone = $_POST['mobile_phone'];
 				$password = $_POST['password'];
 				
-				$query = "SELECT * FROM attendee WHERE mobile_phone = '$mobileNum' AND password = '$password'";
-				$results = $db->query($query);
+				$stmt = $db->prepare("SELECT * FROM attendee WHERE mobile_phone = ? AND password = ?");
+				$stmt->bind_param('ss', $mobile_phone, $password);
+				$stmt->execute();
+				
+				$results = $stmt->get_result();
 				
 				if ($results->num_rows == 0)
 				{
@@ -65,32 +68,46 @@
 				{
 					// log the user in
 					$login = $results->fetch_assoc();
-					
 					// set session variables then redirect to menu page
 					$_SESSION['mobile_phone'] = $login['mobile_phone'];
 					$_SESSION['password'] = $login['password'];
-					header('Location: Bookings.php');
+					header('Location: ../Attendee/Booking/Bookings.php');
 					exit;
 				}
 			}
 		?>
-		Click <a href="Register.php">here</a> to register.</br>
+		Click <a href="../Attendee/Register/Register.php">here</a> to register.</br>
 		<a href="AdminLogin.php">Admin Login</a>
 	</td>
 	<td style="border: 1px solid black">Upcomming Concerts:</br>
-	<ul style="margin: 0px">
-	<?php
-		$today = date("Y-m-d H:i:s");
-		$pos_query = "SELECT * FROM concert JOIN venue ON concert.venue_id = venue.venue_id WHERE concert_date >= '$today' ORDER BY concert_date";
-		$pos_results = $db->query($pos_query);
-		
-		for ($i=0 ; $i < $pos_results->num_rows ; $i++ )
-		{
-			$pos_row = $pos_results->fetch_assoc();
-			echo '<li>'.$pos_row['concert_date'].', '.$pos_row['venue_name'].'</li>';
-		}
-    ?>
-	</ul>
+	  <table>
+		<tr>
+		  <td style="text-align: center">Date</td>
+		  <td style="text-align: center">Venue</td>
+		  <td style="text-align: center">Band</td>
+		</tr>
+		<?php
+			$today = date("Y-m-d H:i:s");
+			$pos_query = "SELECT * FROM concert JOIN venue ON concert.venue_id = venue.venue_id JOIN band ON concert.band_id = band.band_id WHERE concert_date >= '$today' ORDER BY concert_date";
+			$pos_results = $db->query($pos_query);
+			
+			for ($i=0 ; $i < $pos_results->num_rows ; $i++ )
+			{
+				$pos_row = $pos_results->fetch_assoc();
+				echo '<tr>';
+				echo '<td style="text-align: center">';
+				echo '&#8226 '.$pos_row['concert_date'];
+				echo '</td>';
+				echo '<td style="text-align: center">';
+				echo $pos_row['venue_name'];
+				echo '</td>';
+				echo '<td style="text-align: center">';
+				echo $pos_row['band_name'];
+				echo '</td>';
+				echo '</tr>';
+			}
+		?>
+	  </table>
 	</td>
 </tr>
 </table>

@@ -1,11 +1,11 @@
 <html>
 <head>
-    <?php include("DBConnection.php");?>
-    <?php include("AdminCheck.php"); ?>
+    <?php include("../../Database/DBConnection.php");?>
+    <?php include("../../Login/AdminCheck.php"); ?>
     <script> 
     import navigationbar from "navigationBar"
     </script>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../../style.css">
 
     <script>
 
@@ -65,7 +65,7 @@
             <h1>Welcome to Free-Gigs, the Free Concert Website!</h1>
             <table>
                 <tr>
-                <?php include("navbar.php")?>
+                <?php include("../navbar.php")?>
                     <td>
                     <table>
                     

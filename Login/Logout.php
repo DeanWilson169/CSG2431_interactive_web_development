@@ -1,4 +1,4 @@
-<?php include('DBConnection.php') ?>
+<?php include('../Database/DBConnection.php') ?>
 <!DOCTYPE html>
 <html>
 <head>

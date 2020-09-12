@@ -2,14 +2,21 @@
 <html>
 <head>
   <title>Attendee Registration Page</title>
-  <?php include('DBConnection.php') ?>
+  <?php include('../../Database/DBConnection.php') ?>
   <script>
   
   function validateRegistration()
   {
 	start = document.AttendeeReg
-	let phone = start.mobile_phone.value
+	
+	let phone = start.mobile_phone.value;
 	let pattern = phone.match(/^\+[\d]{2}\s[\d]{3}\s[\d]{3}\s[\d]{3}$/);
+	
+	today = new Date();
+	dd = String(today.getDate()).padStart(2, '0');
+	mm = String(today.getMonth() + 1).padStart(2, '0');
+	yyyy = today.getFullYear();
+	today = yyyy + '-' + mm + '-' + dd;
 	
 	if (start.firstname.value == '')
 	{
@@ -29,21 +36,33 @@
 		start.mobile_phone.focus();
 		return false;
 	}
-	else if (!pattern)
+	/*else if (!pattern)
 	{
 		alert('An invalid mobile phone has been entered');
 		start.mobile_phone.focus();
 		return false;
-	}
+	}*/
 	else if (start.DOB.value == '')
 	{
 		alert('No date of birth has been selected');
 		start.DOB.focus();
 		return false;
 	}
+	else if (start.DOB.value >= today)
+	{
+		alert('Invalid date of birth has been selected');
+		start.DOB.focus();
+		return false;
+	}
 	else if (start.password.value == '')
 	{
 		alert('No password has been entered');
+		start.password.focus();
+		return false;
+	}
+	else if (start.password.value.length < 5)
+	{
+		alert('Invalid password has been entered: must be at least 5 characters');
 		start.password.focus();
 		return false;
 	}
@@ -89,7 +108,7 @@
 	<tr style="background-color: #FFFFFF;"> 
       <td>Date of Birth</td>
       <td> 
-        <input name="DOB" type="date" style="width: 150px;" /></td>
+        <input name="DOB" type="date" style="width: 150px;" max="<?php echo date("Y-m-d"); ?>" /></td>
     </tr>
     <tr style="background-color: #FFFFFF;"> 
       <td>Password</td>
@@ -111,7 +130,7 @@
 	  </td>
     </tr>
   </table>
-  Return to the login page <a href="Login.php">here</a>.
+  Return to the login page <a href="../../Login/Login.php">here</a>.
 </form>
 </body>
 </html>

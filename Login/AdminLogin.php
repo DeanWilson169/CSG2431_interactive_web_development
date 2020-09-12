@@ -1,4 +1,4 @@
-<?php include('DBConnection.php')?>
+<?php include('../Database/DBConnection.php')?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -37,13 +37,13 @@
 <tr style="border: 1px solid black">
 	<td style="border: 1px solid black; text-align: right;">
 		Username: <input name="username" type="text" maxlength="15" /></br>
-		Password: <input name="password" type="text" /></br>
+		Password: <input name="password" type="password" /></br>
 		<input type="submit" name="AdminlogIn" value="Login"  /></br>
 		<?php
 			// if the "username" session variable is set and not empty, redirect to the menu page
 			if (isset($_SESSION['username']) && $_SESSION['username'] != '' )
 			{
-				header('Location: bands.php');
+				header('Location: ../Admin/Band/bands.php');
 				exit;
 			}
 			
@@ -52,8 +52,11 @@
 				$username = $_POST['username'];
 				$password = $_POST['password'];
 				
-				$query = "SELECT * FROM admin WHERE username = '$username' AND password = '$password'";
-				$results = $db->query($query);
+				$stmt = $db->prepare("SELECT * FROM admin WHERE username = ? AND password = ?");
+				$stmt->bind_param('ss', $username, $password);
+				$stmt->execute();
+				
+				$results = $stmt->get_result();
 				
 				if ($results->num_rows == 0)
 				{
@@ -67,7 +70,7 @@
 					// set session variables then redirect to menu page
 					$_SESSION['username'] = $login['username'];
 					$_SESSION['password'] = $login['password'];
-					header('Location: bands.php');
+					header('Location: ../Admin/Band/bands.php');
 					exit;
 				}
 			}

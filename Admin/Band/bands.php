@@ -2,14 +2,24 @@
 
 <head>
     <?php 
-    include("DBConnection.php");
-    include("AdminCheck.php");
+    include("../../Database/DBConnection.php");
+    include("../../Login/AdminCheck.php");
     ?>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../../style.css">
     <script>
     const confirmDelete = () => {
         return confirm("Are you sure you want to delete this band");
     }
+
+    const ValidateBand = () => {
+        const name = document.AddBandForm.newBandName.value;
+        if(name == ''){
+            alert('Please enter a band name');
+            return false;
+        }
+        return true;
+    }
+
     </script>
 </head>
 
@@ -18,7 +28,7 @@
             <h1>Welcome to Free-Gigs, the Free Concert Website!</h1>
             <table>
                 <tr>
-                    <?php include("navbar.php")?>
+                    <?php include("../navbar.php")?>
                     <td>
                     <h3>Current Bands</h3>
                         <table>
@@ -41,10 +51,10 @@
                         </form>
                         </table>
                         <h3>Add New Band:</h3>
-                        <form action="insertBand.php" method="post">
+                        <form name="AddBandForm" action="insertBand.php" method="post">
                             <p>Name:
                                 <input type="text" name="newBandName" id="newBandName">
-                                <input type="submit" value="Add Band">
+                                <input type="submit" value="Add Band" onclick="return ValidateBand();">
                             </p>
                         </form>
                     </td>

@@ -1,10 +1,10 @@
 <html>
 <head>
     <?php 
-    include("DBConnection.php");
-    include("AdminCheck.php");
+    include("../../Database/DBConnection.php");
+    include("../../Login/AdminCheck.php");
     ?>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../../style.css">
     <script>
     const confirmDelete = () => {
 
@@ -18,7 +18,7 @@
             <h1>Welcome to Free-Gigs, the Free Concert Website!</h1>
             <table>
                 <tr>
-                    <?php include("navbar.php")?>
+                    <?php include("../navbar.php")?>
                     <td>
                         <h3>Current Venues</h3>
                         <table>
