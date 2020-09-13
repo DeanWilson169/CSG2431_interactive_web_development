@@ -1,6 +1,5 @@
  
- <td class="navbar">
-    <div>
+    <div class="navbar">
     <?php 
         include('../../Database/DBConnection.php');
         $username = $_SESSION['username'];
@@ -18,10 +17,9 @@
              <?php
         }
     ?>
-    </div>
+    
     <h5><em>Admin Area: </em></h5>
     <h5><a href="../Band/bands.php">Manage Bands</a></h5>
     <h5><a href="../Venue/venues.php">Manage Venues</a></h5>
     <h5><a href="../Concert/concerts.php">Add Concert</a></h5>
-    
-</td>
+    </div>

@@ -1,22 +1,33 @@
 <?php 
 	include('../../Database/DBConnection.php');
-	include('../../Login/AttendeeCheck.php');
+	if (!isset($_SESSION['mobile_phone']))
+	{
+		header("Location: ../../Login/Login.php");
+		exit;
+	}
+	elseif (isset($_SESSION['username']))
+	{
+		header("Location: ../../Admin/Band/bands.php");
+		exit;
+	}
 ?>
 <!DOCTYPE html>
 <html>
 <head>
+	<link rel="stylesheet" href="../.././style.css">
 	<title>Booking page</title>
 	<script>
 		function confirmDelete()
 		{
-			return confirm('Are you sure you want to add/delete that entry?');
+			return confirm('Are you sure you want to delete that entry?');
 		}
 	</script>
 </head>
 
-<body>
+<body class="body">
+	<div class="AttendeeBox">
 <form name="booking" method="get">
-<table style="border: 1px solid black">
+<table class="BookingTable" style="border: 1px solid black">
 <tr style="background-color: #cccccc; border: 1px solid black">
   <td style="text-align: center; border: 1px solid black" colspan="2">Free-Gigs Bookings Page</td>
 </tr>
@@ -34,7 +45,7 @@
 	</br>
 	<a href="../../Login/logout.php">Log out</a>
   </td>
-  <td style="border: 1px solid black">Upcomming Concerts:</br>
+  <td style="border: 1px solid black"><h3>Upcoming Concerts: </h3>
 	<table>
 	  <tr style="text-align: center;">
 		<td>Date</td>
@@ -117,5 +128,6 @@
 </tr>
 </table>
 </form>
+</div>
 </body>
 </html>

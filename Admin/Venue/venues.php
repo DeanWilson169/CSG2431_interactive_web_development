@@ -2,9 +2,18 @@
 <head>
     <?php 
     include("../../Database/DBConnection.php");
-    include("../../Login/AdminCheck.php");
+	if (!isset($_SESSION['username']))
+	{
+		header("Location: ../../Login/Login.php");
+		exit;
+	}
+	elseif (isset($_SESSION['mobile_phone']))
+	{
+		header("Location: ../../Attendee/Booking/Bookings.php");
+		exit;
+	}
     ?>
-    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="../.././style.css">
     <script>
     const confirmDelete = () => {
 
@@ -13,15 +22,16 @@
     </script>
 </head>
 
-    <body>
-        <div>
-            <h1>Welcome to Free-Gigs, the Free Concert Website!</h1>
+    <body class="body">
+        <div class="AttendeeBox">
+            <h1 class="WebpageTitle">Welcome to Free-Gigs, the Free Concert Website!</h1>
+            <div class="PageTable">
+            <?php include("../navbar.php")?>
             <table>
                 <tr>
-                    <?php include("../navbar.php")?>
                     <td>
                         <h3>Current Venues</h3>
-                        <table>
+                        <table class="bandsTable">
                         <form method="get">
                         <?php
                             $venue_query = "SELECT * FROM venue";
@@ -41,7 +51,7 @@
                         ?>
                         </form>
                         </table>
-
+                        </div>
                         <h3>Add New Venue:</h3>
                         <form action="insertVenue.php" method="post">
                             <p>Name:

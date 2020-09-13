@@ -8,13 +8,21 @@
 	// connect to the database
 	include('../../Database/DBConnection.php');
 	
-	//create short variable names from the data received from the form
-	$firstname = $_POST['firstname'];
-	$surname = $_POST['surname'];
-	$mobile_phone = $_POST['mobile_phone'];
-	$DOB = $_POST['DOB'];
-	$password = $_POST['password']; 
-	$confirmPassword = $_POST['confirmPassword'];
+	if (isset($_POST['firstname']))
+	{
+		//create short variable names from the data received from the form
+		$firstname = $_POST['firstname'];
+		$surname = $_POST['surname'];
+		$mobile_phone = $_POST['mobile_phone'];
+		$DOB = $_POST['DOB'];
+		$password = $_POST['password']; 
+		$confirmPassword = $_POST['confirmPassword'];
+	}
+	else
+	{
+		header('Location: Register.php');
+		exit;
+	}
 	
 	$error_message = '';
 	
@@ -59,14 +67,14 @@
 	}
 	else
 	{
-		$insert_stmt = "INSERT INTO attendee VALUES (?, ?, ?, ?, ?)";
+		$insert_stmt = $db->prepare("INSERT INTO attendee VALUES (?, ?, ?, ?, ?)");
 		$insert_stmt->bind_param('sssss', $mobile_phone, $firstname, $surname, $DOB, $password);
 		
 		$insert_stmt->execute();
 		
 		$insert_results = $insert_stmt->get_result();
 		
-		if ($results)
+		if ($insert_stmt)
 		{
 			$_SESSION['mobile_phone'] = $mobile_phone;
 			header('Location: ../Bookings/Bookings.php');

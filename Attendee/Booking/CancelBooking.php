@@ -1,5 +1,14 @@
 <?php include('../../Database/DBConnection.php');
-	include('../../Login/AttendeeCheck.php');
+	if (!isset($_SESSION['mobile_phone']))
+	{
+		header("Location: ../../Login/Login.php");
+		exit;
+	}
+	elseif (isset($_SESSION['username']))
+	{
+		header("Location: ../../Admin/Band/bands.php");
+		exit;
+	}
 
 	$booking_id = $_GET['booking_id'];
 	$mobile_phone = $_SESSION['mobile_phone'];

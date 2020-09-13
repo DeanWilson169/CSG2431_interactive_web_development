@@ -28,13 +28,15 @@
 		}
 	}
   </script>
+  <link rel="stylesheet" href=".././style.css">
 </head>
 
-<body>
+<body class="body">
+	<div class="AttendeeBox">
 <form name="ULogin" method="post" onsubmit="return validateLogIn();">
 <table style="border: 1px solid black">
 <tr style="background-color: #cccccc; border: 1px solid black">
-	<td style="text-align: center; border: 1px solid black" colspan="2">Welcome to Free-Gigs, the Free Concert Website</td>
+	<td style="text-align: center; border: 1px solid black" colspan="2"><h1 class="WebpageTitle">Welcome to Free-Gigs, the Free Concert Website</h1></td>
 </tr>
 <tr style="border: 1px solid black">
 	<td style="border: 1px solid black; text-align: right;">
@@ -79,7 +81,7 @@
 		Click <a href="../Attendee/Register/Register.php">here</a> to register.</br>
 		<a href="AdminLogin.php">Admin Login</a>
 	</td>
-	<td style="border: 1px solid black">Upcomming Concerts:</br>
+	<td style="border: 1px solid black"><h3>Upcoming Concerts:</h3>
 	  <table>
 		<tr>
 		  <td style="text-align: center">Date</td>
@@ -112,5 +114,6 @@
 </tr>
 </table>
 </form>
+</div>
 </body>
 </html>

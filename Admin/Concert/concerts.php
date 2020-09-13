@@ -1,40 +1,34 @@
 <html>
 <head>
-    <?php include("../../Database/DBConnection.php");?>
-    <?php include("../../Login/AdminCheck.php"); ?>
+    <?php include("../../Database/DBConnection.php");
+    include("../../Database/DBConnection.php");
+	if (!isset($_SESSION['username']))
+	{
+		header("Location: ../../Login/Login.php");
+		exit;
+	}
+	elseif (isset($_SESSION['mobile_phone']))
+	{
+		header("Location: ../../Attendee/Booking/Bookings.php");
+		exit;
+    }
+    ?>
     <script> 
     import navigationbar from "navigationBar"
     </script>
-    <link rel="stylesheet" href="../../style.css">
-
+    <link rel="stylesheet" href="../.././style.css">
     <script>
 
-    const ValidateDate = () => {
-        const date = document.AddConcertForm.selectedDate.value;
-        const today = new Date();
+    const ValidateDateTime = () => {
 
+        const date = document.AddConcertForm.selectedDate.value;
+        const time = document.AddConcertForm.selectedTime.value;
+        const today = new Date();
         const day = today.getDate();
         let month = today.getMonth() + 1;
         const year = today.getFullYear();
-
-        if (month < 10){
-            month = "0" + month;
-        }
-        todayFormatted = year + "-" + month + "-" + day;
-
-        if(date < todayFormatted){
-            alert("Please enter a date in the future");
-            return false;
-        }
-        return true;
-    }
-
-    const ValidateTime = () => {
-        const time = document.AddConcertForm.selectedTime.value;
-        const today = new Date();
-
-        let hour = today.getHours();
-        let minute = today.getMinutes();
+        const hour = today.getHours();
+        const minute = today.getMinutes();
 
         if(hour < 10){
             hour = "0" + hour;
@@ -42,33 +36,42 @@
         if(minute < 10){
             minute = "0" + minute;
         }
-
-        const todayFormatted = hour + ":" + minute;
-
-        if(time < todayFormatted){
-            alert("Please enter a time that is in the future");
+        if (month < 10){
+            month = "0" + month;
+        }
+        const todayDateFormatted = year + "-" + month + "-" + day;
+        const todayTimeFormatted = hour + ":" + minute;
+        console.log("Date: ");
+        if(date < todayDateFormatted){
+            alert("The entered Date has already passed");
+            return false;
+        }
+        else if(date == todayDateFormatted && time < todayTimeFormatted){
+            alert("The entered time has already passed");
             return false;
         }
         return true;
     }
+
     const ValidateForm = () => {
-        if(ValidateDate() && ValidateTime()){
-            return true
+
+        if(ValidateDateTime()){
+            return true;
         }
         return false;
     }
     </script>
 </head>
-    <body>
+    <body class="body">
     
-        <div>
-            <h1>Welcome to Free-Gigs, the Free Concert Website!</h1>
+        <div class="ContentBox">
+            <h1 class="WebpageTitle">Welcome to Free-Gigs, the Free Concert Website!</h1>
+            <div class="PageTable">
+            <?php include("../navbar.php")?>
             <table>
                 <tr>
-                <?php include("../navbar.php")?>
                     <td>
-                    <table>
-                    
+                    <table class="concertTable">
                     <h3>Current Venues</h3>
                                 <?php
                                     $pos_query = "SELECT concert_id, band.band_id, venue.venue_id, venue.venue_name, band.band_name, concert_date FROM ((concert INNER JOIN venue ON concert.venue_id = venue.venue_id) INNER JOIN band ON concert.band_id = band.band_id) ORDER BY concert_id";
@@ -88,6 +91,7 @@
                                 ?>
                    
                     </table>
+                    </div>
                     <form name="AddConcertForm" action="insertConcert.php" method="post">
                         <h3>Add Concert</h3>
                         <p>
@@ -131,7 +135,7 @@
                             Time:
                             <?php 
                             $currentTime = date("H:i");
-                            echo '<input type="time" name="selectedTime" id="selectedTime" min="'.$currentTime.'" value="'.$currentTime.'">';
+                            echo '<input type="time" name="selectedTime" id="selectedTime" value="'.$currentTime.'">';
                              ?>
 
                         </p>

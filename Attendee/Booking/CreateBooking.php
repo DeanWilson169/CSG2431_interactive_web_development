@@ -1,6 +1,15 @@
 <?php
 	include('../../Database/DBConnection.php');
-	include('../../Login/AttendeeCheck.php');
+	if (!isset($_SESSION['mobile_phone']))
+	{
+		header("Location: ../../Login/Login.php");
+		exit;
+	}
+	elseif (isset($_SESSION['username']))
+	{
+		header("Location: ../../Admin/Band/bands.php");
+		exit;
+	}
 ?>
 
 <!DOCTYPE html>
@@ -26,13 +35,18 @@
 		$error_message = 'You have already made a booking for this concert';
 	}
 	
-	$time_stmt = $db->prepare("SELECT * FROM concert WHERE concert_id = ? AND concert_date > ?");
-	$time_stmt->bind_param('is', $concert_id, $today);
+	$time_stmt = $db->prepare("SELECT * FROM concert WHERE concert_id = ?");
+	$time_stmt->bind_param('i', $concert_id);
 	$time_stmt->execute();
 	
 	$time_results = $time_stmt->get_result();
+	$concert = $time_results->fetch_assoc();
 	
 	if ($time_results->num_rows == 0)
+	{
+		$error_message = 'A concert with id '.$concert_id.' does not exist';
+	}
+	else if ($concert['concert_date'] < $today)
 	{
 		$error_message = 'It is too late to book this concert';
 	}

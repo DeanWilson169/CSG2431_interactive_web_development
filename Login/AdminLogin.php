@@ -2,6 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<link rel="stylesheet" href=".././style.css">
 	<title>Admin Login page</title>
 	<script>
 		function validateAdminLogIn()
@@ -28,17 +29,24 @@
 	</script>
 </head>
 
-<body>
+<body class="body">
+	<div class="ContentBox">
 <form name="ALogin" method="post" onsubmit="return validateAdminLogIn();">
-<table style="border: 1px solid black">
-<tr style="background-color: #cccccc; border: 1px solid black">
-	<td style="text-align: center; border: 1px solid black">Admin Login</td>
-</tr>
-<tr style="border: 1px solid black">
-	<td style="border: 1px solid black; text-align: right;">
-		Username: <input name="username" type="text" maxlength="15" /></br>
-		Password: <input name="password" type="password" /></br>
-		<input type="submit" name="AdminlogIn" value="Login"  /></br>
+<div class="box">
+<h3>Admin Login</h3>
+		<div class="AdminLoginForm">
+			<div style="min-width: 250px; ">
+				<div style="display: flex; justify-content: flex-end;">
+					<div>Username: </div>
+						<div><input name="username" type="text" maxlength="15" /></div>
+					</div>
+					<div style="display: flex; justify-content: flex-end;">
+						<div>Password: </div>
+						<div><input name="password" type="password" /></div>
+					</div>
+				</div>
+				<input style=" margin: 10px 0px 8px 0px" type="submit" name="AdminlogIn" value="Login"  /></br>
+			</div>
 		<?php
 			// if the "username" session variable is set and not empty, redirect to the menu page
 			if (isset($_SESSION['username']) && $_SESSION['username'] != '' )
@@ -75,10 +83,12 @@
 				}
 			}
 		?>
-		Return to the login page <a href="Login.php">here</a>.
-	</td>
-</tr>
+			<div style="text-align:center;">
+			Return to the login page <a href="Login.php">here</a>.
+			</div>
+		<div>
 </table>
 </form>
+</div>
 </body>
 </html>

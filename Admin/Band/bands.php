@@ -3,9 +3,18 @@
 <head>
     <?php 
     include("../../Database/DBConnection.php");
-    include("../../Login/AdminCheck.php");
-    ?>
-    <link rel="stylesheet" href="../../style.css">
+	if (!isset($_SESSION['username']))
+	{
+		header("Location: ../../Login/Login.php");
+		exit;
+	}
+	elseif (isset($_SESSION['mobile_phone']))
+	{
+		header("Location: ../../Attendee/Booking/Bookings.php");
+		exit;
+	}
+?>
+    <link rel="stylesheet" href="../.././style.css">
     <script>
     const confirmDelete = () => {
         return confirm("Are you sure you want to delete this band");
@@ -23,15 +32,16 @@
     </script>
 </head>
 
-    <body>
-        <div>
-            <h1>Welcome to Free-Gigs, the Free Concert Website!</h1>
+    <body class="body">
+        <div  class="ContentBox">
+            <h1 class="WebpageTitle">Welcome to Free-Gigs, the Free Concert Website!</h1>
+            <div class="PageTable">
+            <?php include("../navbar.php")?>
             <table>
                 <tr>
-                    <?php include("../navbar.php")?>
                     <td>
                     <h3>Current Bands</h3>
-                        <table>
+                        <table class="bandsTable">
                         <form method="get">
                         <?php
 
@@ -42,7 +52,7 @@
                             {
                                 echo '<tr>';
                                 $band_row = $results->fetch_assoc();
-                                echo '<td>'.$band_row['band_name'].'</td>';
+                                echo '<td class="bandName">'.$band_row['band_name'].'</td>';
                                 echo '<td><a href="editBand.php?band_id='.$band_row['band_id'].'"> Edit </a></td>';
                                 echo '<td><a onClick="return confirmDelete();" href="deleteBand.php?band_id='.$band_row['band_id'].'"> Delete </a></td>';
                                 echo '</tr>';
@@ -50,16 +60,19 @@
                         ?>
                         </form>
                         </table>
-                        <h3>Add New Band:</h3>
-                        <form name="AddBandForm" action="insertBand.php" method="post">
-                            <p>Name:
-                                <input type="text" name="newBandName" id="newBandName">
-                                <input type="submit" value="Add Band" onclick="return ValidateBand();">
-                            </p>
-                        </form>
                     </td>
                 </tr>
+                
             </table>
+            </div>
+            <h3>Add New Band:</h3>
+                <form name="AddBandForm" action="insertBand.php" method="post">
+                <p>Name:
+                    <input type="text" name="newBandName" id="newBandName">
+                    <input type="submit" value="Add Band" onclick="return ValidateBand();">
+                </p>
+            </form>
         </div>
+
     </body>
 </html>
